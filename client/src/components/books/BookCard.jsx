@@ -7,7 +7,7 @@ const BookCard = ({ book }) => {
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <div className="bg-white rounded-lg shadow-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div className="relative h-48 bg-gray-100">
                 {book.imageUrl ? (
                     <img
@@ -64,11 +64,11 @@ const BookCard = ({ book }) => {
                 <div className="flex space-x-2">
                     <Link
                         to={`/book/${book._id}`}
-                        className="flex-1 bg-blue-600 text-white text-center py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                        className="flex-1 bg-blue-500 text-white text-center py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200"
                     >
                         View Details
                     </Link>
-                    <button className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors duration-200">
+                    <button className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors duration-200">
                         Buy Now
                     </button>
                 </div>

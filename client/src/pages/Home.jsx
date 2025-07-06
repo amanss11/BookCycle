@@ -19,7 +19,7 @@ function Home() {
                 category: 'fiction',
                 location: 'Mumbai',
                 sellerName: 'John Doe',
-                imageUrl: null
+                imageUrl: "https://m.media-amazon.com/images/I/81QuEGw8VPL._SL1500_.jpg"
             },
             {
                 _id: '2',
@@ -30,7 +30,7 @@ function Home() {
                 category: 'fiction',
                 location: 'Delhi',
                 sellerName: 'Jane Smith',
-                imageUrl: null
+                imageUrl: "https://m.media-amazon.com/images/I/81gepf1eMqL.jpg"
             },
             {
                 _id: '3',
@@ -41,7 +41,7 @@ function Home() {
                 category: 'fiction',
                 location: 'Bangalore',
                 sellerName: 'Mike Johnson',
-                imageUrl: null
+                imageUrl: "https://m.media-amazon.com/images/I/715WdnBHqYL._UF1000,1000_QL80_.jpg"
             },
             {
                 _id: '4',
@@ -52,18 +52,18 @@ function Home() {
                 category: 'fiction',
                 location: 'Chennai',
                 sellerName: 'Sarah Wilson',
-                imageUrl: null
+                imageUrl: "https://m.media-amazon.com/images/I/712cDO7d73L._UF1000,1000_QL80_.jpg"
             },
             {
                 _id: '5',
-                title: 'Sapiens: A Brief History of Humankind',
+                title: 'Sapiens',
                 author: 'Yuval Noah Harari',
                 price: 400,
                 condition: 'new',
                 category: 'non-fiction',
                 location: 'Kolkata',
                 sellerName: 'David Brown',
-                imageUrl: null
+                imageUrl: "https://m.media-amazon.com/images/I/713jIoMO3UL._UF1000,1000_QL80_.jpg"
             },
             {
                 _id: '6',
@@ -74,9 +74,109 @@ function Home() {
                 category: 'self-help',
                 location: 'Hyderabad',
                 sellerName: 'Lisa Davis',
-                imageUrl: null
+                imageUrl: "https://m.media-amazon.com/images/I/81F90H7hnML.jpg"
+            },
+            {
+                _id: '7',
+                title: 'The Alchemist',
+                author: 'Paulo Coelho',
+                price: 200,
+                condition: 'good',
+                category: 'fiction',
+                location: 'Pune',
+                sellerName: 'Ankit Sharma',
+                imageUrl: "https://m.media-amazon.com/images/I/617lxveUjYL.jpg"
+            },
+            {
+                _id: '8',
+                title: 'Rich Dad Poor Dad',
+                author: 'Robert Kiyosaki',
+                price: 150,
+                condition: 'fair',
+                category: 'self-help',
+                location: 'Ahmedabad',
+                sellerName: 'Ritika Jain',
+                imageUrl: "https://m.media-amazon.com/images/I/81BE7eeKzAL._UF1000,1000_QL80_.jpg"
+            },
+            {
+                _id: '9',
+                title: 'A Brief History of Time',
+                author: 'Stephen Hawking',
+                price: 320,
+                condition: 'like-new',
+                category: 'science',
+                location: 'Lucknow',
+                sellerName: 'Yash Patel',
+                imageUrl: "https://m.media-amazon.com/images/I/81pQPZAFWbL.jpg"
+            },
+            {
+                _id: '10',
+                title: 'The Power of Habit',
+                author: 'Charles Duhigg',
+                price: 260,
+                condition: 'good',
+                category: 'self-help',
+                location: 'Jaipur',
+                sellerName: 'Priya Verma',
+                imageUrl: "https://m.media-amazon.com/images/I/71ONWR6eXDL.jpg"
+            },
+            {
+                _id: '11',
+                title: 'Thinking, Fast and Slow',
+                author: 'Daniel Kahneman',
+                price: 300,
+                condition: 'excellent',
+                category: 'non-fiction',
+                location: 'Nagpur',
+                sellerName: 'Rahul Mehta',
+                imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFECstqGox6cN058IZfjm6eivgkz_ZqUD9vQ&s"
+            },
+            {
+                _id: '12',
+                title: 'The Catcher in the Rye',
+                author: 'J.D. Salinger',
+                price: 190,
+                condition: 'poor',
+                category: 'fiction',
+                location: 'Surat',
+                sellerName: 'Mira Kapoor',
+                imageUrl: "https://m.media-amazon.com/images/I/8125BDk3l9L.jpg"
+            },
+            {
+                _id: '13',
+                title: 'The Silent Patient',
+                author: 'Alex Michaelides',
+                price: 220,
+                condition: 'good',
+                category: 'mystery',
+                location: 'Bhopal',
+                sellerName: 'Sneha Joshi',
+                imageUrl: "https://m.media-amazon.com/images/I/81JJPDNlxSL._UF1000,1000_QL80_.jpg"
+            },
+            {
+                _id: '14',
+                title: 'Educated',
+                author: 'Tara Westover',
+                price: 310,
+                condition: 'excellent',
+                category: 'biography',
+                location: 'Noida',
+                sellerName: 'Neeraj Singh',
+                imageUrl: "https://m.media-amazon.com/images/I/71-4MkLN5jL._UF1000,1000_QL80_.jpg"
+            },
+            {
+                _id: '15',
+                title: 'Ikigai',
+                author: 'Héctor García',
+                price: 170,
+                condition: 'fair',
+                category: 'self-help',
+                location: 'Chandigarh',
+                sellerName: 'Simran Kaur',
+                imageUrl: "https://m.media-amazon.com/images/I/81l3rZK4lnL.jpg"
             }
         ];
+          
 
         setBooks(mockBooks);
         setFilteredBooks(mockBooks);
@@ -149,7 +249,7 @@ function Home() {
                     <BookFilter onFilterChange={handleFilterChange} />
 
                     <div className="mb-6">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                        <h2 className="text- font-semibold text-gray-900 mb-4">
                             Available Books ({filteredBooks.length})
                         </h2>
                     </div>
