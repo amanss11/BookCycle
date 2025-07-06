@@ -29,11 +29,13 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
+            {/* 
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            */}
             <Route path="/book/:id" element={<BookDetail />} />
 
-            {/* Protected Routes */}
+            {/* Protected Routes 
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
@@ -54,6 +56,7 @@ function App() {
                 <Profile />
               </ProtectedRoute>
             } />
+          */}
           </Routes>
         </Layout>
       </Router>

@@ -61,13 +61,13 @@ const Header = () => {
                         ) : (
                             <div className="flex items-center space-x-4">
                                 <Link
-                                    to="/login"
+                                    to="/"
                                     className="text-white hover:text-blue-500 transition-colors"
                                 >
                                     Login
                                 </Link>
                                 <Link
-                                    to="/register"
+                                    to="/"
                                     className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                                 >
                                     Sign Up
