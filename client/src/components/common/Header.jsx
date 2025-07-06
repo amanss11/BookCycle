@@ -11,7 +11,7 @@ const Header = () => {
     }
 
     return (
-        <header className="bg-white shadow-md">
+        <header className="bg-gray-800 text-white shadow-md">
             <div className="max-w-screen-xl mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
@@ -19,12 +19,12 @@ const Header = () => {
                         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                             <span className="text-white font-bold text-lg">B</span>
                         </div>
-                        <span className="text-xl font-bold text-gray-900">BookCycle</span>
+                        <span className="text-xl font-bold text-white">BookCycle</span>
                     </Link>
 
                     {/* Navigation */}
                     <nav className="hidden md:flex items-center space-x-8">
-                        <Link to="/" className="text-gray-600 hover:text-gray-900 transition-colors">
+                        <Link to="/" className="text-white hover:text-blue-500 transition-colors">
                             Home
                         </Link>
                         {isAuthenticated() && (
@@ -62,7 +62,7 @@ const Header = () => {
                             <div className="flex items-center space-x-4">
                                 <Link
                                     to="/login"
-                                    className="text-gray-600 hover:text-gray-900 transition-colors"
+                                    className="text-white hover:text-blue-500 transition-colors"
                                 >
                                     Login
                                 </Link>
