@@ -7,7 +7,7 @@ const BookCard = ({ book }) => {
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <div className="bg-white rounded-lg shadow-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300 m-2">
             <div className="relative h-48 bg-gray-100">
                 {book.imageUrl ? (
                     <img
