@@ -14,6 +14,12 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import BookDetail from './pages/BookDetail'
+import AddBook from './pages/AddBook'
+import EditBook from './pages/EditBook'
+import Profile from './pages/Profile'
+
+
 
 function App() {
   return (
@@ -25,11 +31,27 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/book/:id" element={<BookDetail />} />
 
             {/* Protected Routes */}
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/add-book" element={
+              <ProtectedRoute>
+                <AddBook />
+              </ProtectedRoute>
+            } />
+            <Route path="/edit-book/:id" element={
+              <ProtectedRoute>
+                <EditBook />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
           </Routes>
