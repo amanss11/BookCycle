@@ -1,67 +1,41 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './App.css'
-
-// Context
-import { AuthProvider } from './context/AuthContext'
-
-// Layout
-import Layout from './components/common/Layout'
-import ProtectedRoute from './components/common/ProtectedRoute'
-
-// Pages
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Dashboard from './pages/Dashboard'
-import BookDetail from './pages/BookDetail'
-import AddBook from './pages/AddBook'
-import EditBook from './pages/EditBook'
-import Profile from './pages/Profile'
-
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Navbar from './components/Navbar';
+import AddBook from './pages/AddBook';
+import ProtectedRoute from './components/ProtectedRoute';
+import MyBooks from './pages/MyBooks';
+import BookDetails from './pages/BookDetails';
+import EditBook from './pages/EditBook';
+import Chat from './pages/Chat';
+import ChatList from './pages/Chatlist';
+import RedirectIfAuthenticated from './components/RedirectIfAuthenticated';
+import Footer from './components/Footer';
+import './index.css'
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Layout>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            {/* 
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            */}
-            <Route path="/book/:id" element={<BookDetail />} />
-
-            {/* Protected Routes 
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/add-book" element={
-              <ProtectedRoute>
-                <AddBook />
-              </ProtectedRoute>
-            } />
-            <Route path="/edit-book/:id" element={
-              <ProtectedRoute>
-                <EditBook />
-              </ProtectedRoute>
-            } />
-            <Route path="/profile" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
-          */}
-          </Routes>
-        </Layout>
-      </Router>
-    </AuthProvider>
-  )
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<RedirectIfAuthenticated>
+          <Login />
+        </RedirectIfAuthenticated>} />
+        <Route path='/register' element={<RedirectIfAuthenticated>
+          <Register />
+        </RedirectIfAuthenticated>} />
+        <Route path="/add-book" element={<ProtectedRoute><AddBook /></ProtectedRoute>} />
+        <Route path="/my-books" element={<ProtectedRoute><MyBooks /></ProtectedRoute>}/>
+        <Route path="/edit-book/:id" element={<ProtectedRoute><EditBook /></ProtectedRoute>} />
+        <Route path="/chats" element={<ProtectedRoute><ChatList /></ProtectedRoute>} />
+        <Route path="/chat/:conversationId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+        <Route path="/book/:id" element={<BookDetails />} />
+      </Routes>
+      <Footer />
+    </Router>
+  );
 }
 
 export default App;

@@ -1,280 +1,206 @@
-import React, { useState, useEffect } from 'react';
-import BookFilter from '../components/books/BookFilter';
-import BookCard from '../components/books/BookCard';
+import { useEffect, useState } from 'react';
+import API from '../services/api';
+import { Link } from 'react-router-dom';
+import { FiSearch, FiFilter, FiBookOpen } from 'react-icons/fi';
+
+const categories = [
+    '', 'Programming', 'Medical', 'Fiction', 'Non-fiction', 'Self-help', 'Science', 'Biography', 'Mystery', 'Reference', 'Other'
+];
+const locations = [
+    '', 'Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad', 'Lucknow', 'Jaipur', 'Other'
+];
 
 function Home() {
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
+    const [filters, setFilters] = useState({
+        search: '',
+        location: '',
+        category: '',
+    });
+    const [showFilters, setShowFilters] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    // Mock data - replace with API call
     useEffect(() => {
-        const mockBooks = [
-            {
-                _id: '1',
-                title: 'The Great Gatsby',
-                author: 'F. Scott Fitzgerald',
-                price: 250,
-                condition: 'good',
-                category: 'fiction',
-                location: 'Mumbai',
-                sellerName: 'John Doe',
-                imageUrl: "https://m.media-amazon.com/images/I/81QuEGw8VPL._SL1500_.jpg"
-            },
-            {
-                _id: '2',
-                title: 'To Kill a Mockingbird',
-                author: 'Harper Lee',
-                price: 180,
-                condition: 'like-new',
-                category: 'fiction',
-                location: 'Delhi',
-                sellerName: 'Jane Smith',
-                imageUrl: "https://m.media-amazon.com/images/I/81gepf1eMqL.jpg"
-            },
-            {
-                _id: '3',
-                title: '1984',
-                author: 'George Orwell',
-                price: 120,
-                condition: 'fair',
-                category: 'fiction',
-                location: 'Bangalore',
-                sellerName: 'Mike Johnson',
-                imageUrl: "https://m.media-amazon.com/images/I/715WdnBHqYL._UF1000,1000_QL80_.jpg"
-            },
-            {
-                _id: '4',
-                title: 'The Hobbit',
-                author: 'J.R.R. Tolkien',
-                price: 350,
-                condition: 'good',
-                category: 'fiction',
-                location: 'Chennai',
-                sellerName: 'Sarah Wilson',
-                imageUrl: "https://m.media-amazon.com/images/I/712cDO7d73L._UF1000,1000_QL80_.jpg"
-            },
-            {
-                _id: '5',
-                title: 'Sapiens',
-                author: 'Yuval Noah Harari',
-                price: 400,
-                condition: 'new',
-                category: 'non-fiction',
-                location: 'Kolkata',
-                sellerName: 'David Brown',
-                imageUrl: "https://m.media-amazon.com/images/I/713jIoMO3UL._UF1000,1000_QL80_.jpg"
-            },
-            {
-                _id: '6',
-                title: 'Atomic Habits',
-                author: 'James Clear',
-                price: 280,
-                condition: 'like-new',
-                category: 'self-help',
-                location: 'Hyderabad',
-                sellerName: 'Lisa Davis',
-                imageUrl: "https://m.media-amazon.com/images/I/81F90H7hnML.jpg"
-            },
-            {
-                _id: '7',
-                title: 'The Alchemist',
-                author: 'Paulo Coelho',
-                price: 200,
-                condition: 'good',
-                category: 'fiction',
-                location: 'Pune',
-                sellerName: 'Ankit Sharma',
-                imageUrl: "https://m.media-amazon.com/images/I/617lxveUjYL.jpg"
-            },
-            {
-                _id: '8',
-                title: 'Rich Dad Poor Dad',
-                author: 'Robert Kiyosaki',
-                price: 150,
-                condition: 'fair',
-                category: 'self-help',
-                location: 'Ahmedabad',
-                sellerName: 'Ritika Jain',
-                imageUrl: "https://m.media-amazon.com/images/I/81BE7eeKzAL._UF1000,1000_QL80_.jpg"
-            },
-            {
-                _id: '9',
-                title: 'A Brief History of Time',
-                author: 'Stephen Hawking',
-                price: 320,
-                condition: 'like-new',
-                category: 'science',
-                location: 'Lucknow',
-                sellerName: 'Yash Patel',
-                imageUrl: "https://m.media-amazon.com/images/I/81pQPZAFWbL.jpg"
-            },
-            {
-                _id: '10',
-                title: 'The Power of Habit',
-                author: 'Charles Duhigg',
-                price: 260,
-                condition: 'good',
-                category: 'self-help',
-                location: 'Jaipur',
-                sellerName: 'Priya Verma',
-                imageUrl: "https://m.media-amazon.com/images/I/71ONWR6eXDL.jpg"
-            },
-            {
-                _id: '11',
-                title: 'Thinking, Fast and Slow',
-                author: 'Daniel Kahneman',
-                price: 300,
-                condition: 'excellent',
-                category: 'non-fiction',
-                location: 'Nagpur',
-                sellerName: 'Rahul Mehta',
-                imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFECstqGox6cN058IZfjm6eivgkz_ZqUD9vQ&s"
-            },
-            {
-                _id: '12',
-                title: 'The Catcher in the Rye',
-                author: 'J.D. Salinger',
-                price: 190,
-                condition: 'poor',
-                category: 'fiction',
-                location: 'Surat',
-                sellerName: 'Mira Kapoor',
-                imageUrl: "https://m.media-amazon.com/images/I/8125BDk3l9L.jpg"
-            },
-            {
-                _id: '13',
-                title: 'The Silent Patient',
-                author: 'Alex Michaelides',
-                price: 220,
-                condition: 'good',
-                category: 'mystery',
-                location: 'Bhopal',
-                sellerName: 'Sneha Joshi',
-                imageUrl: "https://m.media-amazon.com/images/I/81JJPDNlxSL._UF1000,1000_QL80_.jpg"
-            },
-            {
-                _id: '14',
-                title: 'Educated',
-                author: 'Tara Westover',
-                price: 310,
-                condition: 'excellent',
-                category: 'biography',
-                location: 'Noida',
-                sellerName: 'Neeraj Singh',
-                imageUrl: "https://m.media-amazon.com/images/I/71-4MkLN5jL._UF1000,1000_QL80_.jpg"
-            },
-            {
-                _id: '15',
-                title: 'Ikigai',
-                author: 'Héctor García',
-                price: 170,
-                condition: 'fair',
-                category: 'self-help',
-                location: 'Chandigarh',
-                sellerName: 'Simran Kaur',
-                imageUrl: "https://m.media-amazon.com/images/I/81l3rZK4lnL.jpg"
+        const fetchBooks = async () => {
+            setLoading(true);
+            try {
+                const { data } = await API.get('/books');
+                setBooks(data);
+                setFilteredBooks(data);
+            } catch (err) {
+                console.error('Error fetching books:', err.response?.data?.message || err.message);
             }
-        ];
-          
-
-        setBooks(mockBooks);
-        setFilteredBooks(mockBooks);
-        setLoading(false);
-        
+            setLoading(false);
+        };
+        fetchBooks();
     }, []);
 
-    const handleFilterChange = (filters) => {
-        let filtered = [...books];
-        if (filters.search) {
-            const searchTerm = filters.search.toLowerCase();
-            filtered = filtered.filter(book =>
-                book.title.toLowerCase().includes(searchTerm) ||
-                book.author.toLowerCase().includes(searchTerm)
+    useEffect(() => {
+        let temp = [...books];
+        if (filters.search)
+            temp = temp.filter((book) =>
+                book.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+                (book.createdBy?.name || '').toLowerCase().includes(filters.search.toLowerCase())
             );
-        }
+        if (filters.location)
+            temp = temp.filter((book) => book.location.toLowerCase() === filters.location.toLowerCase());
+        if (filters.category)
+            temp = temp.filter((book) => book.category.toLowerCase() === filters.category.toLowerCase());
+        setFilteredBooks(temp);
+    }, [filters, books]);
 
-        // Category filter
-        if (filters.category) {
-            filtered = filtered.filter(book => book.category === filters.category);
-        }
-
-        // Condition filter
-        if (filters.condition) {
-            filtered = filtered.filter(book => book.condition === filters.condition);
-        }
-
-        // Price range filter
-        if (filters.priceRange) {
-            const [min, max] = filters.priceRange.split('-').map(Number);
-            filtered = filtered.filter(book => {
-                if (max) {
-                    return book.price >= min && book.price <= max;
-                } else {
-                    return book.price >= min;
-                }
-            });
-        }
-
-        if (filters.location) {
-            filtered = filtered.filter(book =>
-                book.location.toLowerCase() === filters.location.toLowerCase()
-            );
-        }
-
-        setFilteredBooks(filtered);
+    const handleChange = (e) => {
+        setFilters({ ...filters, [e.target.name]: e.target.value });
+    };
+    const handleSearch = (e) => {
+        e.preventDefault();
+        // Filtering is already reactive, so just prevent default
+    };
+    const clearFilters = () => {
+        setFilters({ search: '', location: '', category: '' });
     };
 
-    if (loading) {
-        return (
-         <div className="min-h-screen flex items-center justify-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-        </div>
-        );
-    }
-    
     return (
-        <>
-            <div className="bg-gray-50 min-h-screen">
-                <div className="container mx-auto px-4 py-8">
-                    <div className="text-center mb-8">
-                        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                            Find Your Next Great Read
-                        </h1>
-                        <p className="text-xl text-gray-600">
-                            Discover thousands of second-hand books from readers like you
-                        </p>
-                    </div>
-
-                    <BookFilter onFilterChange={handleFilterChange} />
-
-                    <div className="mb-6">
-                        <h2 className="text- font-semibold text-gray-900 mb-4">
-                            Available Books ({filteredBooks.length})
-                        </h2>
-                    </div>
-
-                    {filteredBooks.length === 0 ? (
-                        <div className="text-center py-12">
-                            <div className="text-gray-400 mb-4">
-                                <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                            </div>
-                            <h3 className="text-lg font-medium text-gray-900 mb-2">No books found</h3>
-                            <p className="text-gray-500">Try adjusting your search criteria</p>
+        <div className="bg-gray-50 min-h-screen pt-8">
+            <div className="max-w-7xl mx-auto px-4">
+                <h2 className="text-3xl font-bold mb-6 text-gray-800">All Books</h2>
+                {/* BookFilter Bar */}
+                <div className="bg-white p-4 md:p-6 rounded-xl shadow-md mb-8">
+                    {/* Search Bar */}
+                    <form onSubmit={handleSearch} className="flex flex-col gap-2 md:flex-row md:items-center">
+                        <div className="relative flex-1">
+                            <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                                <FiSearch size={18} />
+                            </span>
+                            <input
+                                type="text"
+                                name="search"
+                                placeholder="Search books, authors, categories..."
+                                value={filters.search}
+                                onChange={handleChange}
+                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-t-md md:rounded-l-md md:rounded-t-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
                         </div>
-                    ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                            {filteredBooks.map(book => (
-                                <BookCard key={book._id} book={book} />
-                            ))}
+                        <button
+                            type="button"
+                            onClick={() => setShowFilters((prev) => !prev)}
+                            className="flex items-center justify-center w-full md:w-auto px-5 py-2 bg-gray-200 text-gray-700 rounded-b-md md:rounded-r-md md:rounded-b-none hover:bg-gray-300 transition text-base font-medium"
+                        >
+                            <FiFilter size={20} />
+                            <span className="ml-2">Filters</span>
+                            <svg
+                                className={`w-4 h-4 ml-1 transition-transform ${showFilters ? 'rotate-180' : ''}`}
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                    </form>
+                    {/* Filter Options */}
+                    {showFilters && (
+                        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 border-t pt-4">
+                            {/* Category */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                <select
+                                    name="category"
+                                    value={filters.category}
+                                    onChange={handleChange}
+                                    className="w-full px-3 py-3 border border-gray-300 rounded-md text-base"
+                                >
+                                    <option value="">All Categories</option>
+                                    {categories.filter(Boolean).map((cat) => (
+                                        <option key={cat} value={cat}>{cat}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            {/* Location */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                <select
+                                    name="location"
+                                    value={filters.location}
+                                    onChange={handleChange}
+                                    className="w-full px-3 py-3 border border-gray-300 rounded-md text-base"
+                                >
+                                    <option value="">All Locations</option>
+                                    {locations.filter(Boolean).map((loc) => (
+                                        <option key={loc} value={loc}>{loc}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    )}
+                    {/* Clear Button */}
+                    {showFilters && (
+                        <div className="mt-4 flex justify-end">
+                            <button
+                                onClick={clearFilters}
+                                className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200"
+                            >
+                                Clear Filters
+                            </button>
                         </div>
                     )}
                 </div>
+                {loading ? (
+                    <div className="flex justify-center items-center h-64">
+                        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                    </div>
+                ) : filteredBooks.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-64 text-gray-400">
+                        <FiBookOpen className="text-6xl mb-2" />
+                        <span className="text-lg">No books found. Try adjusting your search or filters!</span>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                        {filteredBooks.map((book) => (
+                            <BookCard key={book._id} book={book} />
+                        ))}
+                    </div>
+                )}
             </div>
-        </>
-    )
+        </div>
+    );
+}
+
+function BookCard({ book }) {
+    return (
+        <Link
+            to={`/book/${book._id}`}
+            className="group bg-white rounded-xl shadow hover:shadow-xl transition-shadow duration-200 flex flex-col overflow-hidden animate-fadeIn focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[340px] md:min-h-[400px]"
+            tabIndex={0}
+        >
+            <div className="aspect-w-3 aspect-h-5 w-full bg-gray-100 flex items-center justify-center overflow-hidden relative">
+                {book.image ? (
+                    <img
+                        src={book.image}
+                        alt={book.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                    />
+                ) : (
+                    <div className="w-16 h-16 text-gray-400 flex items-center justify-center">
+                        <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                        </svg>
+                    </div>
+                )}
+            </div>
+            <div className="p-4 flex-1 flex flex-col">
+                <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2 group-hover:text-blue-700 transition-colors">{book.title}</h3>
+                <p className="text-sm text-gray-600 mb-1">by {book.author || book.createdBy?.name || 'Unknown'}</p>
+                <div className="flex items-center justify-between mb-2">
+                    <span className="text-lg font-bold text-green-600">₹{book.sellingPrice || book.price}</span>
+                    <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">{book.location}</span>
+                </div>
+                <span className="sr-only">View details for {book.title}</span>
+                <span className="mt-auto bg-blue-600 text-white text-center py-2 px-4 rounded-md group-hover:bg-blue-700 transition-colors duration-200 font-semibold shadow focus:bg-blue-700 focus:outline-none">View Details</span>
+            </div>
+        </Link>
+    );
 }
 
 export default Home;

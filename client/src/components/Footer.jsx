@@ -1,9 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-800 text-white">
+        <footer className="bg-gray-800 text-white mt-12">
             <div className="max-w-screen-xl mx-auto px-4 py-8">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Brand */}
@@ -30,12 +29,12 @@ const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/" className="text-gray-300 hover:text-white transition-colors">
+                                <Link to="/login" className="text-gray-300 hover:text-white transition-colors">
                                     Login
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/" className="text-gray-300 hover:text-white transition-colors">
+                                <Link to="/register" className="text-gray-300 hover:text-white transition-colors">
                                     Register
                                 </Link>
                             </li>
@@ -58,7 +57,7 @@ const Footer = () => {
                 </div>
             </div>
         </footer>
-    )
-}
+    );
+};
 
-export default Footer;
+export default Footer; 
